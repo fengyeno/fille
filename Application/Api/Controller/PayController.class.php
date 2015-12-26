@@ -322,6 +322,28 @@ class PayController extends BaseController{
         }
 
     }
+    /*聊天付款*/
+    public function payIM(){
+        $uid=I('uid');
+        if(!$uid){
+            $this->apiError(0,'未知的用户');
+        }
+        $coin=C('PAY_IM');
+
+        $order['uid']=$this->uid;
+        $order['type']="im";
+        $order['coin']=$coin;
+        $order['content_id']=$uid;
+        $order['status']=1;
+        $order['create_time']=time();
+        $order['update_time']=time();
+        /*订单*/
+        $res=M('user_order_coin')->add($order);
+        /*减去金币*/
+        $this->deCoin($coin,$res,$this->uid,'im');
+
+        $this->apiSuccess('success');
+    }
     /*获取vip价格*/
     protected function get_buyInfo($vip){
         $map['status']=1;
