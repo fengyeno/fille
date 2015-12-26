@@ -1,0 +1,168 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    <div class="main-title">
+        <h2>用户详情</h2>
+    </div>
+    <script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+    <form action="{:U('detail',array('uid'=>$info['uid']))}" method="post" class="form-horizontal">
+        <div class="form-item">
+            <label class="item-label">昵称</label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="nickname" value="{$info.nickname}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">推荐人</label>
+            <div class="controls">
+                <select name="middleman" id="middleman">
+                    <option value="0">请选择</option>
+                    <foreach name="_users" item="v">
+                        <option value="{$v.id}" {$v['id']==$info['middleman']?"selected":""}>{$v.name}</option>
+                    </foreach>
+                </select>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">性别</label>
+            <div class="controls">
+                <select name="sex" id="">
+                    <option value="1" {$info['sex']==1?'selected':''}>男</option>
+                    <option value="2" {$info['sex']==2?'selected':''}>女</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">头像</label>
+            <div class="controls">
+                <input type="file" id="upload_picture">
+                <input type="hidden" name="headimg" id="cover" value="{$info.headimg}"/>
+                <div class="upload-img-box">
+                    <notempty name="info.headimg">
+                        <div class="upload-pre-item"><img src="{$info.headimg}"/></div>
+                    </notempty>
+                </div>
+            </div>
+            <script type="text/javascript">
+                //上传图片
+                /* 初始化上传插件 */
+                $("#upload_picture").uploadify({
+                    "height"          : 30,
+                    "swf"             : "__STATIC__/uploadify/uploadify.swf",
+                    "fileObjName"     : "download",
+                    "buttonText"      : "上传图片",
+                    "uploader"        : "{:U('File/uploadPicture',array('session_id'=>session_id()))}",
+                    "width"           : 120,
+                    'removeTimeout'	  : 1,
+                    'fileTypeExts'	  : '*.jpg; *.png; *.gif;',
+                    "onUploadSuccess" : uploadPicture,
+                'onFallback' : function() {
+                    alert('未检测到兼容版本的Flash.');
+                }
+                });
+                function uploadPicture(file, data){
+                    var data = $.parseJSON(data);
+                    var src = '';
+                    if(data.status){
+                        src = '__ROOT__' + data.path;
+                        $("#cover").val(src);
+                        $("#cover").parent().find('.upload-img-box').html(
+                                '<div class="upload-pre-item"><img src="' + src + '"/></div>'
+                        );
+                    } else {
+                        updateAlert(data.info);
+                        setTimeout(function(){
+                            $('#top-alert').find('button').click();
+                            $(that).removeClass('disabled').prop('disabled',false);
+                        },1500);
+                    }
+                }
+            </script>
+        </div>
+        <div class="form-item">
+            <label class="item-label">手机</label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="phone" value="{$info.phone}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">城市</label>
+            <div class="controls">
+                <select name="" id="province">
+                    <option value="0">请选择</option>
+                    <foreach name="province" item="v">
+                        <option value="{$v.no}" {$v['no']==$pro['no']?"selected":""}>{$v.areaname}</option>
+                    </foreach>
+                </select>
+                <select name="city" id="city">
+
+                    <notempty name="citylist">
+                        <foreach name="citylist" item="v">
+                            <option value="{$v.no}" {$v['no']==$info['city']?"selected":""}>{$v.areaname}</option>
+                        </foreach>
+                    <else />
+                        <option value="{$nfo.city}">请选择</option>
+                    </notempty>
+                </select>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">公开手机</label>
+            <div class="controls">
+                <select name="phoneout" id="">
+                    <option value="1" {$info['phoneout']==1?"selected":""}>公开</option>
+                    <option value="0" {$info['phoneout']==1?"selected":""}>不公开</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">金币</label>
+            <div class="controls">
+                <input type="text" readonly class="text input-large" name="coin" value="{$info.coin}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">身高(厘米)</label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="height" value="{$info.height}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">体重(Kg)</label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="weight" value="{$info.weight}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">年龄</label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="age" value="{$info.age}">
+            </div>
+        </div>
+        <div class="form-item">
+            <button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+            <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+        </div>
+    </form>
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+        //导航高亮
+        highlight_subnav('{:U('User/index')}');
+        $(function(){
+            $('#province').change(function(){
+                var no=$(this).val();
+                $.get("{:U('getCityList')}",{no:no},function(data){
+                    if(data.status==1){
+                        var html="";
+                        for(var i in data.list){
+                            html+='<option value="'+data.list[i]['no']+'">'+data.list[i]['areaname']+'</option>';
+                        }
+                        $('#city').html(html);
+                    }
+                });
+            });
+        });
+    </script>
+</block>

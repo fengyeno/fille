@@ -1,0 +1,87 @@
+<extend name="Public/base" />
+<!-- 子导航 -->
+<block name="sidebar">
+    <include file="./Addons/Umeng/View/Umeng/side.html" />
+</block>
+<block name="body">
+    <div class="main-title cf">
+        <h2>推送消息</h2>
+    </div>
+    <!-- 表单 -->
+    <form id="form" action="{:addons_url('Umeng://Umeng/edit')}" method="post" class="form-horizontal doc-modal-form">
+        <div class="form-item">
+            <label class="item-label">通知栏提示文字</label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="ticker" value="{$info.ticker}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">标题</label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="title" value="{$info.title}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">文字描述</label>
+            <div class="controls">
+                <textarea class="textarea input-large" name="text">{$info.text}</textarea>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">发送范围</label>
+            <div class="controls">
+                <select name="type">
+                    <!--<option value="unicast" <eq name="info.type" value="unicast">selected</eq>>单播</option>-->
+                    <option value="broadcast" <eq name="info.type" value="broadcast">selected</eq>>广播</option>
+                    <!--<option value="groupcast" <eq name="info.type" value="groupcast">selected</eq>>组播</option>-->
+                </select>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">消息类型</label>
+            <div class="controls">
+                <select name="display_type">
+                    <option value="notification" <eq name="info.display_type" value="notification">selected</eq>>通知</option>
+                    <option value="message" <eq name="info.display_type" value="message">selected</eq>>消息</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">客户端</label>
+            <div class="controls">
+                <input type="checkbox" name="pctype[]" value="1" <in name="info.pctype" value="1,3">checked</in> /> Android
+                <input type="checkbox" name="pctype[]" value="2" <in name="info.pctype" value="2,3">checked</in> /> IOS
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">后续行为</label>
+            <div class="controls">
+                <select name="after_open">
+                    <option value="go_app" <eq name="info.after_open" value="go_app">selected</eq>>打开应用</option>
+                    <option value="go_url" <eq name="info.after_open" value="go_url">selected</eq>>跳转到URL</option>
+                    <!--<option value="go_activity" <eq name="info.after_open" value="go_activity">selected</eq>>打开特定的activity</option>-->
+                    <!--<option value="go_custom" <eq name="info.after_open" value="go_custom">selected</eq>>用户自定义内容</option>-->
+                </select>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">url(以http或者https开头)</label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="url" value="{$info['url']}">
+            </div>
+        </div>
+        <!--<div class="form-item">-->
+            <!--<label class="item-label">activity</label>-->
+            <!--<div class="controls">-->
+                <!--<input type="text" class="text input-large" name="activity" value="{$info['activity']}">-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <div class="form-item">
+            <!--<input type="hidden" name="id" value="{$info.id}"/>-->
+            <input type="hidden" name="status" value="1"/>
+            <button class="btn ajax-post_custom submit-btn" target-form="form-horizontal" id="submit">确 定</button>
+            <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+        </div>
+    </form>
+</block>

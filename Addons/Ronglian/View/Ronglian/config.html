@@ -1,0 +1,55 @@
+<extend name="Public/base" />
+<!-- 子导航 -->
+<block name="sidebar">
+    <include file="./Addons/Umeng/View/Umeng/side.html" />
+</block>
+<block name="body">
+    <div class="main-title cf">
+        <h2>推送配置</h2>
+    </div>
+    <!-- 表单 -->
+    <form id="form" action="{:addons_url('Umeng://Umeng/config')}" method="post" class="form-horizontal doc-modal-form">
+        <div class="form-item">
+            <label class="item-label">Android AppKey</label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="a_appkey" value="{$info.a_appkey}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">Android App Master Secret</label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="a_msecret" value="{$info.a_msecret}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">Android Umeng Message Secret</label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="a_umsecret" value="{$info.a_umsecret}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">IOS AppKey</label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="i_appkey" value="{$info.i_appkey}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">IOS App Master Secret</label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="i_msecret" value="{$info.i_msecret}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">IOS Umeng Message Secret</label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="i_umsecret" value="{$info.i_umsecret}">
+            </div>
+        </div>
+        <div class="form-item">
+            <!--<input type="hidden" name="id" value="{$info.id}"/>-->
+            <input type="hidden" name="status" value="1"/>
+            <button class="btn ajax-post_custom submit-btn" target-form="form-horizontal" id="submit">确 定</button>
+            <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+        </div>
+    </form>
+</block>

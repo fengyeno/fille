@@ -1,0 +1,43 @@
+<extend name="Public/base" />
+<!-- 子导航 -->
+<block name="sidebar">
+    <include file="./Addons/Baidupush/View/Baidu/side.html" />
+</block>
+<block name="body">
+    <div class="main-title cf">
+        <h2>推送配置</h2>
+    </div>
+    <!-- 表单 -->
+    <form id="form" action="{:addons_url('Baidupush://Baidu/config')}" method="post" class="form-horizontal doc-modal-form">
+        <div class="form-item">
+            <label class="item-label">Android AppKey</label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="a_apiKey" value="{$config.a_apiKey}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">Android Secret</label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="a_secretKey" value="{$config.a_secretKey}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">IOS AppKey</label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="i_apiKey" value="{$config.i_apiKey}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">IOS Secret</label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="i_secretKey" value="{$config.i_secretKey}">
+            </div>
+        </div>
+        <div class="form-item">
+            <!--<input type="hidden" name="id" value="{$info.id}"/>-->
+            <input type="hidden" name="status" value="1"/>
+            <button class="btn ajax-post_custom submit-btn" target-form="form-horizontal" id="submit">确 定</button>
+            <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+        </div>
+    </form>
+</block>

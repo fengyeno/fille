@@ -1,0 +1,47 @@
+<extend name="Public/base"/>
+<!-- 子导航 -->
+<block name="sidebar">
+    <include file="./Addons/Baidupush/View/Baidu/side.html" />
+</block>
+<block name="body">
+    <div class="main-title">
+        <h2>友盟推送</h2>
+    </div>
+    <!-- 按钮工具栏 -->
+    <div class="cf">
+        <div class="fl">
+            <a class="btn new-a" href="{:addons_url('Baidupush://Baidu/edit')}">新 增</a>
+            <!--<button class="btn ajax-post" target-form="ids" url="{:addons_url('Umeng://Umeng/del')}">删 除</button>-->
+
+        </div>
+    </div>
+    <!-- 数据表格 -->
+    <div class="data-table">
+        <table class="">
+            <thead>
+            <tr>
+                <th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
+                <th>#</th>
+                <th>内容</th>
+                <th>创建时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name='_list' item='v'>
+                <tr height="45">
+                    <td><input class="ids" type="checkbox" name="ids[]" value="{$v.id}" /></td>
+                    <td>{$v.id}</td>
+                    <td>{$v.msg}</td>
+                    <td>{$v.create_time|date="Y-m-d H:i",###}</td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+
+
+    </div>
+    <!-- 分页 -->
+    <div class="page">
+        {$_page}
+    </div>
+</block>

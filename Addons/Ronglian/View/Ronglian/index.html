@@ -1,0 +1,69 @@
+<extend name="Public/base"/>
+<!-- 子导航 -->
+<block name="sidebar">
+    <include file="./Addons/Umeng/View/Umeng/side.html" />
+</block>
+<block name="body">
+    <div class="main-title">
+        <h2>友盟推送</h2>
+    </div>
+    <!-- 按钮工具栏 -->
+    <div class="cf">
+        <div class="fl">
+            <a class="btn new-a" href="{:addons_url('Umeng://Umeng/edit')}">新 增</a>
+            <button class="btn ajax-post" target-form="ids" url="{:addons_url('Umeng://Umeng/del')}">删 除</button>
+
+        </div>
+    </div>
+    <!-- 数据表格 -->
+    <div class="data-table">
+        <table class="">
+            <thead>
+            <tr>
+                <th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
+                <th>#</th>
+                <th>标题</th>
+                <th>创建时间</th>
+                <th>客户端</th>
+                <th>类型</th>
+                <th>范围</th>
+                <th>结果</th>
+                <th width="150">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name='list' item='v'>
+                <tr height="45">
+                    <td><input class="ids" type="checkbox" name="ids[]" value="{$v.id}" /></td>
+                    <td>{$v.id}</td>
+                    <td>{$v.title}</td>
+                    <td>{$v.createtime|date="Y-m-d H:i",###}</td>
+                    <td>
+                        <eq name="v.pctype" value="1">Android</eq>
+                        <eq name="v.pctype" value="2">IOS</eq>
+                        <eq name="v.pctype" value="3">全部</eq>
+                    </td>
+                    <td>
+                        <eq name="v.display_type" value="notification">通知</eq>
+                        <eq name="v.display_type" value="message">消息</eq>
+                    </td>
+                    <td>
+                        <eq name="v.type" value="broadcast">广播</eq>
+                        <eq name="v.type" value="unicast">单播</eq>
+                        <eq name="v.type" value="groupcast">组</eq>
+                    </td>
+                    <td>{$v['result']==1?'成功':'失败'}</td>
+                    <td><a class="btn new-a" href="{:addons_url('Umeng://Umeng/edit',array('id'=>$v['id']))}">修改</a>
+                        <a class="btn confirm ajax-get" href="{:addons_url('Umeng://Umeng/del',array('ids'=>$v['id']))}">删除</a></td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+
+
+    </div>
+    <!-- 分页 -->
+    <div class="page">
+        {$page}
+    </div>
+</block>

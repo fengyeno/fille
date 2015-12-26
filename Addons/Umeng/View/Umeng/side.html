@@ -1,0 +1,23 @@
+<div id="subnav" class="subnav">
+    <h3 >
+        <i class="icon icon-unfold"></i>
+        推送管理
+    </h3>
+    <ul class="side-sub-menu">
+        <li <in name="_GET['_action']" value="config">class="current"</in>>
+        <a class="item" href="{:addons_url('Umeng://Umeng/config')}">推送配置</a>
+        </li>
+        <li <in name="_GET['_action']" value="index,edit">class="current"</in>>
+        <a class="item" href="{:addons_url('Umeng://Umeng/index')}">推送管理</a>
+        </li>
+    </ul>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $(".side-sub-menu li").hover(function(){
+            $(this).addClass("hover");
+        },function(){
+            $(this).removeClass("hover");
+        });
+    });
+</script>
