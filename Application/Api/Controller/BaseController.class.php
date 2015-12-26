@@ -776,7 +776,7 @@ class BaseController extends Controller{
     protected function getAboutDate(){
         $path='Data/dateinfo.config';
         $fp=fopen($path,'r');
-        $str=fread($fp,1024);
+        $str=fread($fp,filesize($path));
         fclose($fp);
         if($str) {
             $info = json_decode($str, true);
