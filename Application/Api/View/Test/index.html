@@ -1,0 +1,75 @@
+<html>
+<head></head>
+<body>
+
+<script type="text/javascript" src="__STATIC__/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+<form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
+    <input type="hidden" name="cmd" value="_s-xclick">
+    <input type="hidden" name="hosted_button_id" value="5FN9XPX79B5PL">
+    <input type="image" src="https://www.sandbox.paypal.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+    <img alt="" border="0" src="https://www.sandbox.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+<!-- 标签页导航 -->
+<div class="tab-wrap">
+
+
+
+
+    <!-- 表单 -->
+    <!--{:U('User/saveImage',array('ukey'=>'SNR5ec9OkL0YXo87B3I*ZAKU4m1l6ViF'))}-->
+    <form id="form" action="" method="post" class="form-horizontal">
+        <div class="controls">
+            <select name="type" id="type">
+                <option value="1">公开</option>
+                <option value="2">私密</option>
+            </select>
+        </div>
+        <!--<div class="controls">-->
+            <!--<input type="file" id="upload_picture">-->
+            <!--<input type="text" name="path" id="path"/>-->
+            <!--<div class="upload-img-box">-->
+
+                <!--<div class="upload-pre-item"><img id="img" src=""/></div>-->
+
+            <!--</div>-->
+        <!--</div>-->
+        <script type="text/javascript">
+            //上传图片
+            /* 初始化上传插件 */
+            $("#upload_picture").uploadify({
+                "height"          : 30,
+                "swf"             : "__STATIC__/uploadify/uploadify.swf",
+                "fileObjName"     : "image",
+                "buttonText"      : "上传图片",
+                "uploader"        : "{:U('User/album',array('session_id'=>session_id(),'ukey'=>'z6huKir5y_704Sk*8RjP3IZgTUXwGlfC'))}",
+                "width"           : 120,
+                'removeTimeout'	  : 1,
+                'fileTypeExts'	  : '*.jpg; *.png; *.gif;',
+                "onUploadSuccess" : uploadPicture,
+                'onFallback' : function() {
+                    alert('未检测到兼容版本的Flash.');
+                }
+            });
+            function uploadPicture(file, data){
+
+                var data = eval("("+data+")");
+                var src = '';
+                if(data.success){
+
+                    src = data.url || '__ROOT__' + data.path
+                    $("#path").val(src);
+                    $("#img").attr('src',src);
+                } else {
+                    alert(data.message);
+                }
+            }
+        </script>
+        <div class="form-item cf">
+            <!--<button class="btn submit-btn ajax-post hidden" id="submit" type="submit" target-form="form-horizontal">确 定</button>-->
+
+        </div>
+    </form>
+</div>
+</body>
+</html>

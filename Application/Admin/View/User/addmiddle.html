@@ -1,0 +1,50 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    <div class="main-title">
+        <h2>用户详情</h2>
+    </div>
+    <script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+    <form action="{:U('addmiddle',array('id'=>$info['id']))}" method="post" class="form-horizontal">
+        <div class="form-item">
+            <label class="item-label">会员选择</label>
+            <div class="controls">
+                <select name="uid" id="uid">
+                    <option value="0">请选择</option>
+                    <foreach name="_users" item="v">
+                        <option value="{$v.uid}" phone="{$v.phone}" {$info['uid']==$v['uid']?"selected":""}>{$v.nickname}</option>
+                    </foreach>
+                </select>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">名称</label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="name" value="{$info.name}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">电话</label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="phone" value="{$info.phone}">
+            </div>
+        </div>
+        <div class="form-item">
+            <button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+            <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+        </div>
+    </form>
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+        //导航高亮
+        highlight_subnav('{:U('User/middle_user')}');
+        $(function(){
+            $('#uid').change(function(){
+                $('input[name="name"]').val($(this).find("option:selected").text());
+                $('input[name="phone"]').val($(this).find("option:selected").attr('phone'));
+            });
+        });
+    </script>
+</block>

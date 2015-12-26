@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<form action="http://fille.wbteam.cn/index.php/Api/Date/newDate/ukey/tdZ4HLuN6kmqYholIjMaD9AO0Vz17WRw" method="post" enctype="multipart/form-data">
+    1发布，2邀请<input type="text" name="type" value="2"/><br /><br />
+    类型<input type="text" name="cid" value="4"/><br /><br />
+    红包类型获取1赠送2<input type="text" name="redbag_type" value="1"/><br /><br />
+    红包<input type="text" name="redbag" value="100"/><br /><br />
+    地点<input type="text" name="place" value="test"/><br /><br />
+    天数<input type="text" name="days" value="2"/><br /><br />
+    邀请的人<input type="text" name="inviteuid" value="21"/><br /><br />
+    <input type="submit" value="提交"/>
+</form>
+</body>
+<script src="Public/static/jquery-2.0.3.min.js"></script>
+<script>
+    $(function(){
+        $url="https://www.sandbox.paypal.com/cgi-bin/webscr?mc_gross=0.01&protection_eligibility=Eligible&address_status=unconfirmed&payer_id=6VJYKT9ZFUTP4&tax=0.00&address_street=NO%201%20Nan%20Jin%20Road&payment_date=00:11:35%20Oct%2029,%202015%20PDT&payment_status=Completed&charset=gb2312&address_zip=200000&first_name=a&mc_fee=0.01&address_country_code=CN&address_name=a%20a&notify_version=3.8&custom=&payer_status=verified&business=fengyenos@126.com&address_country=China&address_city=Shanghai&quantity=1&verify_sign=An5ns1Kso7MWUdW4ErQKJJJ4qi4-AVarfZvde3tDf9TJOVlD.RDLqi2A&payer_email=fengyenob@126.com&txn_id=62A349041R296180D&payment_type=instant&btn_id=3230695&last_name=a&address_state=Shanghai&receiver_email=fengyenos@126.com&payment_fee=0.01&shipping_discount=0.00&insurance_amount=0.00&receiver_id=YBLBUX726D89G&txn_type=web_accept&item_name=%E7%AB%8B%E5%8D%B3%E8%B4%AD%E4%B9%B0%E6%8C%89%E9%92%AE%E7%A4%BA%E4%BE%8B&discount=0.00&mc_currency=USD&item_number=1&residence_country=CN&test_ipn=1&shipping_method=Default&handling_amount=0.00&transaction_subject=&payment_gross=0.01&shipping=0.00&ipn_track_id=9a45f04234d3f&cmd=_notify-validate";
+        $.post($url,function(data){
+            alert(data);
+        });
+    });
+</script>
+</html>
