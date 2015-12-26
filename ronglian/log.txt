@@ -1,6 +1,0 @@
-request body = <SubAccount>
-                    <appId>aaf98f894d985d36014d99cefaa7025c</appId>
-                    <friendlyName>test</friendlyName>
-                  </SubAccount>
-request url = https://sandboxapp.cloopen.com:8883/2013-12-26/Accounts/8a48b5514d9861c3014d99cd40530231/SubAccounts?sig=8867A2E3494F2C3690A2D4931D660296
-response body = <?xml version="1.0" encoding="UTF-8" standalone="yes"?><Response><statusCode>000000</statusCode><SubAccount><dateCreated>2015-05-28 17:26:56</dateCreated><subAccountSid>af3a6bfe051b11e58ad3ac853d9f54f2</subAccountSid><subToken>522217bb456ab25e5334189c3e8c4b22</subToken><voipAccount>87012000000002</voipAccount><voipPwd>OCwBjyHF</voipPwd></SubAccount></Response>
