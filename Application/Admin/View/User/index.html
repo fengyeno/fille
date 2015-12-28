@@ -1,6 +1,9 @@
 <extend name="Public/base" />
 
 <block name="body">
+    <style>
+        .dropdown .row{display: block;}
+    </style>
 	<!-- 标题栏 -->
 	<div class="main-title">
 		<h2>用户列表</h2>
@@ -12,7 +15,6 @@
             <button class="btn ajax-post" url="{:U('changeStatus?method=forbidUser')}" target-form="ids">禁 用</button>
             <button class="btn ajax-post confirm" url="{:U('changeStatus?method=deleteUser')}" target-form="ids">删 除</button>
         </div>
-
         <!-- 高级搜索 -->
 		<div class="search-form fr cf">
 			<div class="sleft">
@@ -21,6 +23,68 @@
 				<input type="text" name="nickname" class="search-input" value="{:I('nickname')}" placeholder="请输入用户昵称或者ID或者手机号">
 				<a class="sch-btn" href="javascript:;" id="search" url="{:U('index')}"><i class="btn-search"></i></a>
 			</div>
+            <div class="btn-group-click adv-sch-pannel fl">
+                <button class="btn">高 级<i class="btn-arrowdown"></i></button>
+                <div class="dropdown cf">
+                    <div class="row">
+                        <label>是否vip：</label>
+                        <select name="is_vip" id="is_vip">
+                            <option value="all" {$_GET['is_vip']=="all"?"selected":''}>全部</option>
+                            <option value="0" {$_GET['is_vip']=="0"?"selected":''}>否</option>
+                            <option value="1" {$_GET['is_vip']=="1"?"selected":''}>是</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <label>vip等级</label>
+                        <select name="small_vip" id="small_vip">
+                            <option value="">请选择</option>
+                            <foreach name="vip_list" item="v">
+                                <option value="{$v.level}" {$_GET['small_vip']==$v['level']?"selected":""}>{$v.level}:{$v.title}</option>
+                            </foreach>
+                        </select>
+                        <select name="big_vip" id="big_vip">
+                            <option value="">请选择</option>
+                            <foreach name="vip_list" item="v">
+                                <option value="{$v.level}" {$_GET['big_vip']==$v['level']?"selected":""}>{$v.level}:{$v.title}</option>
+                            </foreach>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <label>视频认证：</label>
+                        <select name="is_video" id="is_video">
+                            <option value="all" {$_GET['is_video']=="all"?"selected":''}>全部</option>
+                            <option value="0" {$_GET['is_video']=="0"?"selected":''}>否</option>
+                            <option value="1" {$_GET['is_video']=="1"?"selected":''}>是</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <label>年龄</label>
+                        <input type="text" name="small_age" class="input-2x" value="{$_GET['small_age']}"/>
+                        <input type="text" name="big_age" class="input-2x" value="{$_GET['big_age']}"/>
+                    </div>
+                    <div class="row">
+                        <label>金币</label>
+                        <input type="text" name="small_coin" class="input-2x" value="{$_GET['small_coin']}"/>
+                        <input type="text" name="big_coin" class="input-2x" value="{$_GET['big_coin']}"/>
+                    </div>
+                    <div class="row">
+                        <label>照片：</label>
+                        <select name="is_album" id="is_album">
+                            <option value="all" {$_GET['is_album']=="all"?"selected":''}>全部</option>
+                            <option value="0" {$_GET['is_album']=="0"?"selected":''}>无</option>
+                            <option value="1" {$_GET['is_album']=="1"?"selected":''}>有</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <label>注册城市</label>
+                        <input type="text" name="city" class="input-2x" value="{$_GET['city']}"/>
+                    </div>
+                    <div class="row">
+                        <label>当前城市</label>
+                        <input type="text" name="nowcity" class="input-2x" value="{$_GET['nowcity']}"/>
+                    </div>
+                </div>
+            </div>
 		</div>
     </div>
     <!-- 数据列表 -->
@@ -100,13 +164,14 @@
 	//搜索功能
 	$("#search").click(function(){
 		var url = $(this).attr('url');
-        var query  = $('.search-form').find('input[name="nickname"]').serialize();
+        var query  = $('.search-form').find('input').serialize();
+        var select = $('.search-form').find('select').serialize();
         query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g,'');
         query = query.replace(/^&/g,'');
         if( url.indexOf('?')>0 ){
-            url += '&' + query;
+            url += '&' + query + '&' + select;
         }else{
-            url += '?' + query;
+            url += '?' + query + '&' + select;
         }
 		window.location.href = url;
 	});
