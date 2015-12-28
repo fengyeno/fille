@@ -207,7 +207,7 @@ class DateController extends BaseController{
                     $list[$key]['redbag_type']='0';
                     $list[$key]['redbag']='0';
                     $list[$key]['style']=2;
-                    $list[$key]['title']="TA现在处于空闲状态，快点邀请吧";
+                    $list[$key]['title']="该用户处于空闲状态";
 
                 }
                 $list[$key]['place']=$this->getProvince($v['city'])." ".$this->getCity($v['city']);
@@ -414,7 +414,7 @@ class DateController extends BaseController{
                     $list[$key]['redbag_type']='0';
                     $list[$key]['redbag']='0';
                     $list[$key]['style']=2;
-                    $list[$key]['title']="TA现在处于空闲状态，快点邀请吧";
+                    $list[$key]['title']="该用户处于空闲状态";
                 }
                 /*容联*/
                 $ronglian=$this->getRonglianCount($v['uid']);
@@ -627,7 +627,7 @@ class DateController extends BaseController{
                     $list[$key]['redbag_type']='0';
                     $list[$key]['redbag']='0';
                     $list[$key]['style']=2;
-                    $list[$key]['title']="TA现在处于空闲状态，快点邀请吧";
+                    $list[$key]['title']="该用户处于空闲状态";
                 }
                 /*容联*/
                 $ronglian=$this->getRonglianCount($v['uid']);
@@ -750,7 +750,7 @@ class DateController extends BaseController{
         $arr=I('post.');
         $user=$this->getUserInfo($this->uid);
         if(!$user['vip']){
-            $this->apiError(0,'vip才能发布约会');
+            $this->apiError(0,'vip才能发布意向');
         }
         $pic=M('user_album')->where(array('uid'=>$this->uid,'status'=>1))->find();
         if(!$pic){
@@ -826,12 +826,12 @@ class DateController extends BaseController{
     public function dateSign(){
         $id=I('get.id');
         if(!$id){
-            $this->apiError(0,'未知的约会');
+            $this->apiError(0,'未知的意向');
         }
         /*约会信息*/
         $info=$this->getDateInfo($id);
         if(!$info){
-            $this->apiError(0,'未知的约会');
+            $this->apiError(0,'未知的意向');
         }
         if($this->uid==$info['uid']){
             $this->apiError(0,'自己不能报名');
@@ -900,7 +900,7 @@ class DateController extends BaseController{
         $uid=I('get.uid');
         $ondate=I('get.ondate');
         if(!$id){
-            $this->apiError(0,'未知的约会');
+            $this->apiError(0,'未知的意向');
         }
         if(!$uid){
             $this->apiError(0,'对方用户不存在');
@@ -908,7 +908,7 @@ class DateController extends BaseController{
         S('date_'.$id,null);
         $info=$this->getDateInfo($id);
         if(!$info){
-            $this->apiError(0,'未知的约会');
+            $this->apiError(0,'未知的意向');
         }
         if($info['date_time']<=date("Y-m-d H:i:s")){
             $this->apiError(0,'已过期');
@@ -1154,7 +1154,7 @@ class DateController extends BaseController{
         $check=M('user_date_pwd')->where($arr)->find();
         $date=$this->getDateInfo($check['date_id']);
         if(!$date){
-            $this->apiError(0,'未知的约会');
+            $this->apiError(0,'未知的意向');
         }
         if($check){
             /*解冻金币，扣除手续费,赠币转让*/
@@ -1185,7 +1185,7 @@ class DateController extends BaseController{
     public function datePwdList(){
         $date_id=I('date_id');
         if(!$date_id){
-            $this->apiError(0,'未知的约会');
+            $this->apiError(0,'未知的意向');
         }
         $where['date_id']=$date_id;
         $where['uid']=$this->uid;
@@ -1373,21 +1373,21 @@ class DateController extends BaseController{
     public function stopDate(){
         $id=I('get.id');
         if(!$id){
-            $this->apiError(0,'未知的约会');
+            $this->apiError(0,'未知的意向');
         }
         $map['uid']=$this->uid;
         $map['id']=$id;
         $map['status']=array('gt',0);
         $info=M('user_date')->where($map)->find();
         if(!$info){
-            $this->apiError(0,'未知的约会');
+            $this->apiError(0,'未知的意向');
         }
         $now=date('Y-m-d H:i:s',time()-5);
         if($info['date_time']<$now){
-            $this->apiError(0,'约会已过期');
+            $this->apiError(0,'意向已过期');
         }
         if($this->checkOnDateStatus($id,$this->uid)){
-            $this->apiError(0,'约会已经达成,不可取消');
+            $this->apiError(0,'意向已经达成,不可取消');
         }
         M('user_date')->where($map)->setField("date_time",$now);
         S('date_'.$id,null);
@@ -1397,7 +1397,7 @@ class DateController extends BaseController{
     public function dateSignList(){
         $id=I('get.id');
         if(!$id){
-            $this->apiError(0,'未知的约会');
+            $this->apiError(0,'未知的意向');
         }
         $info=$this->getDateInfo($id);
         if($info){
@@ -1434,7 +1434,7 @@ class DateController extends BaseController{
             $data['info']=$info;
             $this->apiSuccess('success',$data);
         }else{
-            $this->apiError(0,'未知的约会');
+            $this->apiError(0,'未知的意向');
         }
     }
     
@@ -1457,7 +1457,7 @@ class DateController extends BaseController{
         }
         $date=$this->getDateInfo($date_id);
         if(!$date){
-            $this->apiError(0,'未知的约会');
+            $this->apiError(0,'未知的意向');
         }
         if($date['type']==1){
             if($date['uid']!=$this->uid && !$this->checkSign($this->uid,$date_id)){
@@ -1499,7 +1499,7 @@ class DateController extends BaseController{
         }
         $date=$this->getDateInfo($date_id);
         if(!$date){
-            $this->apiError(0,'未知的约会');
+            $this->apiError(0,'未知的意向');
         }
         if(!$this->checkTousu($foruid,$date_id)){
             $this->apiError(0,'未投诉');
