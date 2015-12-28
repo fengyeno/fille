@@ -328,6 +328,9 @@ class PayController extends BaseController{
         if(!$uid){
             $this->apiError(0,'未知的用户');
         }
+        if($this->checkPay('im',$uid)){
+            $this->apiSuccess('已付款');
+        }
         $coin=C('PAY_IM');
 
         $order['uid']=$this->uid;
@@ -574,6 +577,56 @@ class PayController extends BaseController{
             //logResult("这里写入想要调试的代码变量值，或其他运行的结果记录");
         }
         die;
+    }
+    /*检测苹果凭证*/
+    protected function check_iap_sign($sign){
+        $map['iap_sign']=$sign;
+        return M('user_order_money')->where($map)->find();
+    }
+    /*检测苹果支付*/
+    public function iap_pay(){
+        $order_no=I('order_no');
+        $iap_sign=I('iap_sign');
+        if(!$order_no){
+            $this->apiError(0,"未知的订单号");
+        }
+        if(!$iap_sign){
+            $this->apiError(0,"未知的苹果凭证");
+        }
+        if($this->check_iap_sign($iap_sign)){
+            $this->apiError(0,"非法请求");
+        }
+        $map['uid']=$this->uid;
+        $map['order_no']=$order_no;
+        $info=M('user_order_money')->where($map)->find();
+        if(!$info){
+            $this->apiError(0,'未知的订单');
+        }
+        if($info['status']==2){
+            $this->apiError(0,"已支付");
+        }
+        require_once("Data/iosiap/iap_pay.php");
+        $iap=new \iap_pay();
+        $res=$iap->check($iap_sign);
+        if($res['buy']==0){
+            $this->apiError(0,$res['message']);
+        }elseif($res['buy']==1){
+            $arr['iap_sign']=$iap_sign;
+            $arr['status']=2;
+            $arr['pay_type']=3;
+            M('user_order_money')->where($map)->save($arr);
+            $coin=$info['coin']*1+$info['more']*1;
+            $this->addCoin($coin,$info['uid'],$info['id'],$info['uid'],'coin');
+            $this->push2user($info['uid'],'您购买了'.$coin.'信用豆，请注意查收');
+            //——请根据您的业务逻辑来编写程序（以上代码仅作参考）——
+            $email=C('SYS_EMAIL');
+            if($email){
+                $user=$this->getUserInfo2($info['uid']);
+                $msg="会员：".$user['nickname']."于".date("Y-m-d H:i:s",time())."购买了{$coin}信用豆";
+                $this->send_mail($email,$msg);
+            }
+        }
+        $this->apiSuccess('success');
     }
     public function success1(){
         $param['username']=C('PAYPAL_USERNAME');
