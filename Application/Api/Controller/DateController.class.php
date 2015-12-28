@@ -500,12 +500,14 @@ class DateController extends BaseController{
         $p=I('page');
         $p=$p?$p:1;
         $near=I('near');
+        $nowcity=I('nowcity');
 
         if($p==1){
             if($lat && $lng){
                 $datas=[
                     'lng'=>$lng,
                     'lat'=>$lat,
+                    'nowcity'=>$nowcity,
                     'last_login_time'=>time(),
                     'last_login_ip'=>get_client_ip(1,true)
                 ];
