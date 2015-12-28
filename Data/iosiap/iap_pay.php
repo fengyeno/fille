@@ -6,7 +6,6 @@ class iap_pay{
      * @return array $result
     */
     public function check($receipt_data){
-
         //验证参数
         if (strlen($receipt_data)<20){
             return array('buy'=>'0','message'=>'非法参数');
@@ -14,16 +13,15 @@ class iap_pay{
 
         //请求验证
         $data['sandbox'] = 0;
-        $html = acurl($receipt_data);
+        $html = $this->acurl($receipt_data);
         $data = json_decode($html,1);
         //如果是沙盒数据 则验证沙盒模式
         if($data['status']=='21007'){
             //请求验证
-            $html = acurl($receipt_data, $sandbox=1);
+            $html = $this->acurl($receipt_data, $sandbox=1);
             $data = json_decode($html,1);
             $data['sandbox'] = 1;
         }
-
         if($data['status']==0){
             $result = array('buy'=>'1','message'=>'购买成功','sandbox'=>$data['sandbox']);
         }else{
@@ -44,12 +42,11 @@ class iap_pay{
      * @param int $sandbox 1：沙盒，0：正式
      * @return string $result
      */
-    function acurl($receipt_data, $sandbox=0){
+    private function acurl($receipt_data, $sandbox=0){
 
         //小票信息
-        $POSTFIELDS = array("receipt-data" => $receipt_data);
+        $POSTFIELDS = array("receipt-data" => base64_encode($receipt_data));
         $POSTFIELDS = json_encode($POSTFIELDS);
-
         //正式购买地址 沙盒购买地址
         $url_buy     = "https://buy.itunes.apple.com/verifyReceipt";
         $url_sandbox = "https://sandbox.itunes.apple.com/verifyReceipt";
