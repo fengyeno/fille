@@ -494,7 +494,7 @@ class UserController extends BaseController{
             }
         }else{
             $info['phone_see']=true;
-            $info['phone']='用户未开放手机号，请通过约会进行联系!';
+            $info['phone']='用户未开放手机号，请通过意向进行联系!';
         }
 
         if($info['vip']){
@@ -725,7 +725,7 @@ class UserController extends BaseController{
         if($phone['phoneout']==1){
             /*手机公开*/
             $data['phone']="用户未开放手机号";
-            $this->apiError(0,'用户未开放手机号，请通过约会进行联系！');
+            $this->apiError(0,'用户未开放手机号，请通过意向进行联系！');
         }
         if(!$this->compareVip($this->uid,$uid)){
             /*对方等级比你高*/
@@ -786,7 +786,7 @@ class UserController extends BaseController{
             ->limit($page->firstRow,$page->listRows)
             ->select();
         if(empty($list)){
-            $this->apiError(0,'该会员还没发布约会!');
+            $this->apiError(0,'该会员还没发布意向!');
         }else{
             foreach($list as $key=>$v){
                 if($v['redbag_type']==1){
@@ -1001,10 +1001,10 @@ class UserController extends BaseController{
                 $name="赠送信用豆";
                 break;
             case 'dategivef':
-                $name="约会赠金冻结";
+                $name="意向赠金冻结";
                 break;
             case 'dategive':
-                $name="获取约会赠金";
+                $name="获取意向赠金";
                 break;
             case 'get':
                 $name="获赠信用豆";
@@ -1016,7 +1016,7 @@ class UserController extends BaseController{
                 $name="管理员操作";
                 break;
             case 'datesys':
-                $name="约会手续费";
+                $name="意向手续费";
                 break;
             case 'im':
                 $name="聊天";
@@ -1025,10 +1025,10 @@ class UserController extends BaseController{
                 $name="解冻";
                 break;
             case 'datefree':
-                $name="约会解冻";
+                $name="意向解冻";
                 break;
             case 'date':
-                $name="约会冻结";
+                $name="意向冻结";
                 break;
             default:
                 break;
