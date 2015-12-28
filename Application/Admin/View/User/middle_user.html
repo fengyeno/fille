@@ -56,8 +56,9 @@
 			<!--<td><span>{$vo['middle']?$vo['middle']:"无"}</span></td>-->
 			<!--<td>{$vo.status_text}</td>-->
 			<td>
+                <a href="{:U('User/index?middle='.$vo['id'])}">会员列表</a>
                 <a href="{:U('User/addmiddle?id='.$vo['id'])}">详情</a>
-                </td>
+            </td>
 		</tr>
 		</volist>
 		<else/>
