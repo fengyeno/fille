@@ -202,7 +202,7 @@ class PayController extends BaseController{
     /*金币购买*/
     public function payforvip(){
         /*充值*/
-        $field=array('id','coin','money','more','des','pic');
+        $field=array('id','coin','money','more','des','pic','product_id');
         $map['status']=1;
         $map['type']=1;
         $coin=M('coin_vip')->field($field)->where($map)->order('coin')->select();
