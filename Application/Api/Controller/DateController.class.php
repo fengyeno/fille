@@ -194,7 +194,7 @@ class DateController extends BaseController{
                     }
                     $list[$key]['style']=1;
                     $cate=$this->getCateInfo($v['cid']);
-                    $list[$key]['title']=$str."找人".$cate['title'];
+                    $list[$key]['title']=$str.",提供".$cate['title'];
                     /*报名*/
                     $list[$key]['sign']=$this->checkSign($this->uid,$v['id']);
 
@@ -400,13 +400,13 @@ class DateController extends BaseController{
                     $arr=array_merge($v,$date);
                     $list[$key]=$arr;
                     if($date['redbag_type']==1){
-                        $str="赠送".$date['redbag']."元";
+                        $str="愿付酬金".$date['redbag']."元";
                     }else{
-                        $str="想要".$date['redbag']."元";
+                        $str="需要酬金".$date['redbag']."元";
                     }
                     $list[$key]['style']=1;
                     $cate=$this->getCateInfo($date['cid']);
-                    $list[$key]['title']=$str."找人".$cate['title'];
+                    $list[$key]['title']=$str.",提供".$cate['title'];
                     /*报名*/
                     $list[$key]['sign']=$this->checkSign($this->uid,$date['id']);
                 }else{
@@ -613,13 +613,13 @@ class DateController extends BaseController{
                     $arr=array_merge($v,$date);
                     $list[$key]=$arr;
                     if($date['redbag_type']==1){
-                        $str="赠送".$date['redbag']."元";
+                        $str="愿付酬金".$date['redbag']."元";
                     }else{
-                        $str="想要".$date['redbag']."元";
+                        $str="需要酬金".$date['redbag']."元";
                     }
                     $list[$key]['style']=1;
                     $cate=$this->getCateInfo($date['cid']);
-                    $list[$key]['title']=$str."找人".$cate['title'];
+                    $list[$key]['title']=$str.",提供".$cate['title'];
                     /*报名*/
                     $list[$key]['sign']=$this->checkSign($this->uid,$date['id']);
                 }else{
@@ -1261,16 +1261,16 @@ class DateController extends BaseController{
         }else{
             foreach($list as $key=>$v){
                 if($v['redbag_type']==1){
-                    $str="赠送".$v['redbag']."元";
+                    $str="愿付酬金".$v['redbag']."元";
                 }else{
-                    $str="想要".$v['redbag']."元";
+                    $str="需要酬金".$v['redbag']."元";
                 }
                 if($v['status']!=3 && strtotime($v['date_time'])<time()){
                     $list[$key]['status']='4';
                 }
                 $list[$key]['style']=1;
                 $cate=$this->getCateInfo($v['cid']);
-                $list[$key]['title']=$str."找人".$cate['title'];
+                $list[$key]['title']=$str.",提供".$cate['title'];
                 $list[$key]['signCount']=$this->getSignCount($v['id']);
                 $list[$key]['onDateCount']=$this->getOnDateCount($v['id'],$this->uid);
                 $list[$key]['create_time']=date('m月d日 H:i',$v['create_time']);
@@ -1302,16 +1302,16 @@ class DateController extends BaseController{
         }else{
             foreach($list as $key=>$v){
                 if($v['redbag_type']==1){
-                    $str="赠送".$v['redbag']."元";
+                    $str="愿付酬金".$v['redbag']."元";
                 }else{
-                    $str="想要".$v['redbag']."元";
+                    $str="需要酬金".$v['redbag']."元";
                 }
                 if($v['status']!=3 && strtotime($v['date_time'])<time()){
                     $list[$key]['status']='4';
                 }
                 $list[$key]['style']=1;
                 $cate=$this->getCateInfo($v['cid']);
-                $list[$key]['title']=$str."找人".$cate['title'];
+                $list[$key]['title']=$str.",提供".$cate['title'];
                 if($v['type']){
                     $list[$key]['user']=$this->getUserInfo2($v['uid']);
                     if($v['ondate']==1){
