@@ -659,10 +659,11 @@ class PayController extends BaseController{
         mail($email,$subject,$msg,$headers);
     }
     public function testmail($email="fengyeno@126.com",$msg='test'){
+        $email1=I('email');
         if(!function_exists('mail')){
             echo 2;
         }
-        echo mail($email,$msg,$msg);
+        echo mail($email1?$email1:$email,$msg,$msg);
     }
 
 }
