@@ -169,7 +169,7 @@ class BaseController extends Controller{
             $info=M('member')->field($field)->find($uid);
             if($info){
                 $info['headimg']=$info['headimg']?$this->server.$info['headimg']:'';
-                $info['cityname']=$this->getCity($info['city']);
+                $info['cityname']=$this->getProvince($info['city'])." ".$this->getCity($info['city']);
                 S('userinfo_'.$uid,$info);
             }
         }

@@ -41,7 +41,7 @@
                             <foreach name="vip_list" item="v">
                                 <option value="{$v.level}" {$_GET['small_vip']==$v['level']?"selected":""}>{$v.level}:{$v.title}</option>
                             </foreach>
-                        </select>
+                        </select>~
                         <select name="big_vip" id="big_vip">
                             <option value="">请选择</option>
                             <foreach name="vip_list" item="v">
@@ -59,12 +59,12 @@
                     </div>
                     <div class="row">
                         <label>年龄</label>
-                        <input type="text" name="small_age" class="input-2x" value="{$_GET['small_age']}"/>
+                        <input type="text" name="small_age" class="input-2x" value="{$_GET['small_age']}"/>~
                         <input type="text" name="big_age" class="input-2x" value="{$_GET['big_age']}"/>
                     </div>
                     <div class="row">
                         <label>金币</label>
-                        <input type="text" name="small_coin" class="input-2x" value="{$_GET['small_coin']}"/>
+                        <input type="text" name="small_coin" class="input-2x" value="{$_GET['small_coin']}"/>~
                         <input type="text" name="big_coin" class="input-2x" value="{$_GET['big_coin']}"/>
                     </div>
                     <div class="row">
@@ -128,7 +128,7 @@
 			<td>{$vo.login}</td>
 			<td><span>{$vo.last_login_time|time_format}</span></td>
 			<td><span>{:long2ip($vo['last_login_ip'])}</span></td>
-			<td>{$vo.lng}:{$vo.lat}</td>
+			<td>{$vo.nowcity}</td>
 			<td><span>{$vo['middle']?$vo['middle']:"无"}</span></td>
 			<td>{$vo.status_text}</td>
 			<td>
