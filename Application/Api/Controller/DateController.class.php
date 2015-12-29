@@ -1440,6 +1440,14 @@ class DateController extends BaseController{
                 $brr[0]=$arr;
                 $info['signList']=$brr;
             }
+            $cate=$this->getCateInfo($info['cid']);
+            if($info['redbag_type']==1){
+                $str="愿付酬金".$info['redbag']."元";
+                $info['title']=$str.",需要".$cate['title'];
+            }else{
+                $str="需要酬金".$info['redbag']."元";
+                $info['title']=$str.",提供".$cate['title'];
+            }
             if(strtotime($info['date_time'])<time()){
                 $info['status']='4';
             }
