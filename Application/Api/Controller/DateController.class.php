@@ -1332,14 +1332,14 @@ class DateController extends BaseController{
                     $list[$key]['tousu']=$this->checkTousu($v['uid'],$v['id']);
                 }else{
                     if($v['uid']==$this->uid){
-                        $list[$key]['type']="我约";
+                        $list[$key]['type']="我邀请";
                         $list[$key]['user']=$this->getUserInfo2($v['inviteuid']);
                         if($v['ondate']==1){
                             $list[$key]['pwd']=$this->checkOnDate($v['id'],$this->uid,$v['inviteuid']);
                         }
                         $list[$key]['tousu']=$this->checkTousu($v['inviteuid'],$v['id']);
                     }else{
-                        $list[$key]['type']="约我";
+                        $list[$key]['type']="邀请我";
                         $list[$key]['user']=$this->getUserInfo2($v['uid']);
                         if($v['ondate']==1){
                             $list[$key]['pwd']=$this->checkOnDate($v['id'],$this->uid,$v['uid']);
