@@ -264,7 +264,7 @@ class BaseController extends Controller{
     protected function getVipInfo($levelid){
         $map['id']=$levelid;
         $map['status']=array('neq',-1);
-        $level=M('user_vip')->field(array('id','level','pic','title'))->where($map)->find();
+        $level=M('user_vip')->field(array('id','level','pic','title','des'))->where($map)->find();
         $level['pic']=$level['pic']?$this->server.$level['pic']:'';
         return $level;
     }
