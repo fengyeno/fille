@@ -24,6 +24,17 @@
             </div>
         </div>
         <div class="form-item">
+            <label class="item-label">vip</label>
+            <div class="controls">
+                <select name="vip" id="">
+                    <option value="0">非VIP</option>
+                    <foreach name="_vips" item="v">
+                        <option value="{$v.id}" {$info['vip']==$v['id']?'selected':''}>{$v.level}级:{$v.title}</option>
+                    </foreach>
+                </select>
+            </div>
+        </div>
+        <div class="form-item">
             <label class="item-label">性别</label>
             <div class="controls">
                 <select name="sex" id="">
