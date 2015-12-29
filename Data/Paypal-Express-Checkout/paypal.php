@@ -2,7 +2,7 @@
 include_once("paypal.class.php");
 class paypal_pay{
     private $paypalmode;
-    private $PayPalMode 			= 'sandbox'; // sandbox or live
+    private $PayPalMode 			= 'live'; // sandbox or live
     private $PayPalApiUsername 		= 'alberteo772_api1.slidnet.com'; //PayPal API Username
     private $PayPalApiPassword 		= 'UL2LME4MCAWJDXDX'; //Paypal API password
     private $PayPalApiSignature 	= 'AH7fEFZRfxcqsa-fhuu4CeQIhKHNAT5mGSk0vgsgQoeUfOQbDtGhMOgv'; //Paypal API Signature
@@ -154,6 +154,7 @@ class paypal_pay{
 
         if('Completed' == $httpParsedResponseAr["PAYMENTINFO_0_PAYMENTSTATUS"])
         {
+//            header("Content-type:text/html;charset=utf-8");
             echo '<div style="color:green">Payment Received! Your product will be sent to you very soon!</div>';
         }
         elseif('Pending' == $httpParsedResponseAr["PAYMENTINFO_0_PAYMENTSTATUS"])
