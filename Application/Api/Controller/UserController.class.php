@@ -789,14 +789,16 @@ class UserController extends BaseController{
             $this->apiError(0,'该会员还没发布意向!');
         }else{
             foreach($list as $key=>$v){
+                $cate=$this->getCateInfo($v['cid']);
                 if($v['redbag_type']==1){
-                    $str="赠送".$v['redbag']."元";
+                    $str="愿付酬金".$v['redbag']."元";
+                    $list[$key]['title']=$str.",需要".$cate['title'];
                 }else{
-                    $str="想要".$v['redbag']."元";
+                    $str="需要酬金".$v['redbag']."元";
+                    $list[$key]['title']=$str.",提供".$cate['title'];
                 }
                 $list[$key]['style']=1;
-                $cate=$this->getCateInfo($v['cid']);
-                $list[$key]['title']=$str."找人".$cate['title'];
+
                 $list[$key]['is_sign']=$this->checkSign($this->uid,$v['id']);
             }
             $data['list']=$list;
