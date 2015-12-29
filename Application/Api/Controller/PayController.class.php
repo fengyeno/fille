@@ -605,13 +605,13 @@ class PayController extends BaseController{
         if($info['status']==2){
             $this->apiError(0,"已支付");
         }
+        M('user_order_money')->where($map)->setField('iap_sign',$iap_sign);
         require_once("Data/iosiap/iap_pay.php");
         $iap=new \iap_pay();
         $res=$iap->check($iap_sign);
         if($res['buy']==0){
             $this->apiError(0,$res['message']);
         }elseif($res['buy']==1){
-            $arr['iap_sign']=$iap_sign;
             $arr['status']=2;
             $arr['pay_type']=3;
             M('user_order_money')->where($map)->save($arr);
