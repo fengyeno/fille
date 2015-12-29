@@ -39,7 +39,7 @@ abstract class IPN_Handler{
     {
         // Choose url
 //        if(array_key_exists('test_ipn', $ipn_post_data) && 1 === (int) $ipn_post_data['test_ipn'])
-            $url = self::paypal_sandbox_url;
+            $url = self::paypal_url;
 //        else
 //            $url = self::paypal_url;
         // Set up request to PayPal
