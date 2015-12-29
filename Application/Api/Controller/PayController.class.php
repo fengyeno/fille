@@ -222,6 +222,7 @@ class PayController extends BaseController{
                     $info=$this->getVipInfo($v['vip']);
                     $vip[$key]['real_coin']=$v['coin'];
                     $vip[$key]['title']=$info['title'];
+                    $vip[$key]['des']=$info['des'];
                     if(!$myVip){
                         $vip[$key]['is_click']=true;
                     }elseif($myVip['level']>=$info['level']){
