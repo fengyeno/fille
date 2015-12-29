@@ -187,14 +187,16 @@ class DateController extends BaseController{
                     $list[$key]['len']='未知';
                 }
                 if(isset($v['redbag_type']) && $v['redbag_type']){
+                    $cate=$this->getCateInfo($v['cid']);
                     if($v['redbag_type']==1){
-                        $str="赠送".$v['redbag']."元";
+                        $str="愿付酬金".$v['redbag']."元";
+                        $list[$key]['title']=$str.",需要".$cate['title'];
                     }else{
-                        $str="想要".$v['redbag']."元";
+                        $str="需要酬金".$v['redbag']."元";
+                        $list[$key]['title']=$str.",提供".$cate['title'];
                     }
                     $list[$key]['style']=1;
-                    $cate=$this->getCateInfo($v['cid']);
-                    $list[$key]['title']=$str.",提供".$cate['title'];
+
                     /*报名*/
                     $list[$key]['sign']=$this->checkSign($this->uid,$v['id']);
 
@@ -399,14 +401,17 @@ class DateController extends BaseController{
                 if($date){
                     $arr=array_merge($v,$date);
                     $list[$key]=$arr;
+                    $cate=$this->getCateInfo($date['cid']);
                     if($date['redbag_type']==1){
                         $str="愿付酬金".$date['redbag']."元";
+                        $list[$key]['title']=$str.",需要".$cate['title'];
                     }else{
                         $str="需要酬金".$date['redbag']."元";
+                        $list[$key]['title']=$str.",提供".$cate['title'];
                     }
                     $list[$key]['style']=1;
-                    $cate=$this->getCateInfo($date['cid']);
-                    $list[$key]['title']=$str.",提供".$cate['title'];
+
+
                     /*报名*/
                     $list[$key]['sign']=$this->checkSign($this->uid,$date['id']);
                 }else{
@@ -612,14 +617,17 @@ class DateController extends BaseController{
                 if($date){
                     $arr=array_merge($v,$date);
                     $list[$key]=$arr;
+                    $cate=$this->getCateInfo($date['cid']);
                     if($date['redbag_type']==1){
                         $str="愿付酬金".$date['redbag']."元";
+                        $list[$key]['title']=$str.",需要".$cate['title'];
                     }else{
                         $str="需要酬金".$date['redbag']."元";
+                        $list[$key]['title']=$str.",提供".$cate['title'];
                     }
                     $list[$key]['style']=1;
-                    $cate=$this->getCateInfo($date['cid']);
-                    $list[$key]['title']=$str.",提供".$cate['title'];
+
+
                     /*报名*/
                     $list[$key]['sign']=$this->checkSign($this->uid,$date['id']);
                 }else{
@@ -800,7 +808,7 @@ class DateController extends BaseController{
 //                $this->freezeCoin($arr['redbag'],$res,$this->uid,2,$arr['type']==2 ? $arr['inviteuid']:$this->uid);
 //            }
             if($arr['type']==2 && $arr['inviteuid']){
-                $this->push2user($arr['inviteuid'],"有人邀请你约会",2,$res);
+                $this->push2user($arr['inviteuid'],"有人向你发起意向邀请",2,$res);
             }
             $this->apiSuccess('success');
         }else{
@@ -867,7 +875,7 @@ class DateController extends BaseController{
         $res=M('user_date_sign')->add($arr);
         if($res){
             /*通知发布约会人*/
-            $this->push2user($info['uid'],'有会员报名你的约会,请查看',1,$id);
+            $this->push2user($info['uid'],'有会员报名你的意向,请查看',1,$id);
             $this->apiSuccess('success');
         }else{
             $coin=$this->reCoinFreezing($this->uid,$id);
@@ -933,7 +941,7 @@ class DateController extends BaseController{
             }
 
             /*发送通知*/
-            $this->push2user($uid,'会员拒绝了你的约会请求，同时解冻了你的信用豆,请查看',3,$id);
+            $this->push2user($uid,'会员拒绝了你的意向请求，同时解冻了你的信用豆,请查看',3,$id);
             S('date_'.$id,null);
             $this->apiSuccess('success');
         }
@@ -1002,7 +1010,7 @@ class DateController extends BaseController{
                 M('user_date')->where(array('id'=>$id))->setField('ondate',1);
             }
             /*发送通知*/
-            $this->push2user($uid,'会员响应了你的约会请求，请查看',3,$id);
+            $this->push2user($uid,'有人接受了你的意向，请查看',3,$id);
             S('date_'.$id,null);
             $this->apiSuccess('success');
         }else{
@@ -1260,17 +1268,19 @@ class DateController extends BaseController{
             $this->apiError(0,'未查找到数据');
         }else{
             foreach($list as $key=>$v){
+                $cate=$this->getCateInfo($v['cid']);
                 if($v['redbag_type']==1){
                     $str="愿付酬金".$v['redbag']."元";
+                    $list[$key]['title']=$str.",需要".$cate['title'];
                 }else{
                     $str="需要酬金".$v['redbag']."元";
+                    $list[$key]['title']=$str.",提供".$cate['title'];
                 }
                 if($v['status']!=3 && strtotime($v['date_time'])<time()){
                     $list[$key]['status']='4';
                 }
                 $list[$key]['style']=1;
-                $cate=$this->getCateInfo($v['cid']);
-                $list[$key]['title']=$str.",提供".$cate['title'];
+
                 $list[$key]['signCount']=$this->getSignCount($v['id']);
                 $list[$key]['onDateCount']=$this->getOnDateCount($v['id'],$this->uid);
                 $list[$key]['create_time']=date('m月d日 H:i',$v['create_time']);
@@ -1301,17 +1311,19 @@ class DateController extends BaseController{
             $this->apiError(0,'未查找到数据');
         }else{
             foreach($list as $key=>$v){
+                $cate=$this->getCateInfo($v['cid']);
                 if($v['redbag_type']==1){
                     $str="愿付酬金".$v['redbag']."元";
+                    $list[$key]['title']=$str.",需要".$cate['title'];
                 }else{
                     $str="需要酬金".$v['redbag']."元";
+                    $list[$key]['title']=$str.",提供".$cate['title'];
                 }
                 if($v['status']!=3 && strtotime($v['date_time'])<time()){
                     $list[$key]['status']='4';
                 }
                 $list[$key]['style']=1;
-                $cate=$this->getCateInfo($v['cid']);
-                $list[$key]['title']=$str.",提供".$cate['title'];
+
                 if($v['type']){
                     $list[$key]['user']=$this->getUserInfo2($v['uid']);
                     if($v['ondate']==1){

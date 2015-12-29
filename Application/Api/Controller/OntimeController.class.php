@@ -66,7 +66,7 @@ class OntimeController extends BaseController{
                 M('coin_freezing')->save($freezing);
                 /*推送*/
 //                $this->push2user($uid,'会员响应了你的约会请求，请查看',3,$id);
-                $this->push2user($v['uid'],"您的约会保证金已经返还",3,$v['date_id']);
+                $this->push2user($v['uid'],"您的保证金已返还",3,$v['date_id']);
             }
         }
     }
