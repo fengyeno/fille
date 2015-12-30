@@ -61,15 +61,15 @@ class ApiController extends BaseController{
         $arr['title']=$msg;
         $arr['description']=$msg;
         $arr['aps']['alert']=$msg;
-        $arr['custom_content']['style']=$style;
+        $arr['custom_content']['style']=$style!=3&&$content_id?1:0;
         $arr['custom_content']['date_id']=$content_id;
         $arr['custom_content']['uid']=$uid;
         $arr['custom_content']['success']=true;
-        $arr['style']=$style==0||$style==3?0:$style;
+        $arr['style']=$style!=3&&$content_id?1:0;
         $arr['date_id']=$content_id;
         $arr['uid']=$uid;
         $arr['success']=true;
-        if($content_id){
+        if($style!=3 && $content_id){
             $date_type=$this->getDateType($content_id);
             $arr['custom_content']['date_type']=$date_type;
             $arr['date_type']=$date_type;

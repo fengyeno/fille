@@ -621,18 +621,30 @@ class BaseController extends Controller{
         if(!$msg){
             return false;
         }
+        if($style==3){
+            /*个人消息*/
+            $style1=0;
+        }
+        if($type==0){
+            /*系统消息*/
+            $style1=0;
+        }
+        if($style!=3 && $type>0){
+            /*约会消息*/
+            $style1=1;
+        }
         $arr['title']=$msg;
         $arr['description']=$msg;
         $arr['aps']['alert']=$msg;
-        $arr['custom_content']['style']=$type;
+        $arr['custom_content']['style']=$style1;
         $arr['custom_content']['date_id']=$content_id;
         $arr['custom_content']['uid']=$uid;
         $arr['custom_content']['success']=true;
-        $arr['style']=$type;
+        $arr['style']=$style1;
         $arr['date_id']=$content_id;
         $arr['uid']=$uid;
         $arr['success']=true;
-        if($content_id){
+        if($style1==1 && $content_id){
             $date_type=$this->getDateType($content_id);
             $arr['custom_content']['date_type']=$date_type;
             $arr['date_type']=$date_type;
