@@ -63,6 +63,7 @@ class BaseController extends Controller{
     /*检测登录*/
     protected function checkLogin(){
         $ukey=I('get.ukey');
+        $ukey=$ukey?$ukey:I('post.ukey');
         if(!$ukey){
             $this->apiError(-1,'请登录');
         }

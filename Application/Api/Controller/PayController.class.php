@@ -588,15 +588,29 @@ class PayController extends BaseController{
     public function iap_pay(){
         $order_no=I('order_no');
         $iap_sign=I('iap_sign');
+//        $iap_sign='{	"signature" = "Aog0qCJQb3gQ0 1oJhyhLopUyK2x96WzDjO zeMrr4AGsFMCcgBVJ6hwYmi3qsn3puTvVi1N5Ymgyola0gM/VlKkZy8kFeUUmzGkRtHMEkjiJjm1UaiX3/vQ56GXEQgWfvtYVRLV7HQ3oU gEGLCr1KV t0lgS6k80a0lB85NqoHAAADVzCCA1MwggI7oAMCAQICCBup4 PAhm/LMA0GCSqGSIb3DQEBBQUAMH8xCzAJBgNVBAYTAlVTMRMwEQYDVQQKDApBcHBsZSBJbmMuMSYwJAYDVQQLDB1BcHBsZSBDZXJ0aWZpY2F0aW9uIEF1dGhvcml0eTEzMDEGA1UEAwwqQXBwbGUgaVR1bmVzIFN0b3JlIENlcnRpZmljYXRpb24gQXV0aG9yaXR5MB4XDTE0MDYwNzAwMDIyMVoXDTE2MDUxODE4MzEzMFowZDEjMCEGA1UEAwwaUHVyY2hhc2VSZWNlaXB0Q2VydGlmaWNhdGUxGzAZBgNVBAsMEkFwcGxlIGlUdW5lcyBTdG9yZTETMBEGA1UECgwKQXBwbGUgSW5jLjELMAkGA1UEBhMCVVMwgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAMmTEuLgjimLwRJxy1oEf0esUNDVEIe6wDsnnal14hNBt1v195X6n93YO7gi3orPSux9D554SkMp Sayg84lTc362UtmYLpWnb34nqyGx9KBVTy5OGV4ljE1OwC oTnRM QLRCmeNxMbPZhS47T eZtDEhVB9usk3 JM2Cogfwo7AgMBAAGjcjBwMB0GA1UdDgQWBBSJaEeNuq9Df6ZfN68Fe I2u22ssDAMBgNVHRMBAf8EAjAAMB8GA1UdIwQYMBaAFDYd6OKdgtIBGLUyaw7XQwuRWEM6MA4GA1UdDwEB/wQEAwIHgDAQBgoqhkiG92NkBgUBBAIFADANBgkqhkiG9w0BAQUFAAOCAQEAeaJV2U51rxfcqAAe5C2/fEW8KUl4iO4lMuta7N6XzP1pZIz1NkkCtIIweyNj5URYHK HjRKSU9RLguNl0nkfxqObiMckwRudKSq69NInrZyCD66R4K77nb9lMTABSSYlsKt8oNtlhgR/1kjSSRQcHktsDcSiQGKMdkSlp4AyXf7vnHPBe4yCwYV2PpSN04kboiJ3pBlxsGwV/ZlL26M2ueYHKYCuXhdqFwxVgm52h3oeJOOt/vY4EcQq7eqHm6m03Z9b7PRzYM2KGXHDmOMk7vDpeMVlLDPSGYz1 U3sDxJzebSpbaJmT7imzUKfggEY7xxf4czfH0yj5wNzSGTOvQ==";	"purchase-info" = "ewoJIm9yaWdpbmFsLXB1cmNoYXNlLWRhdGUtcHN0IiA9ICIyMDE1LTEyLTMwIDAyOjI4OjIyIEFtZXJpY2EvTG9zX0FuZ2VsZXMiOwoJInVuaXF1ZS1pZGVudGlmaWVyIiA9ICI1YTVmZTU3NzVmN2Q0YTUzOTJkN2NlMDQ3NTljMjQ3M2U5YzM4MDQ3IjsKCSJvcmlnaW5hbC10cmFuc2FjdGlvbi1pZCIgPSAiMTAwMDAwMDE4Njk5NTk4OSI7CgkiYnZycyIgPSAiMTAwMTEiOwoJInRyYW5zYWN0aW9uLWlkIiA9ICIxMDAwMDAwMTg2OTk1OTg5IjsKCSJxdWFudGl0eSIgPSAiMSI7Cgkib3JpZ2luYWwtcHVyY2hhc2UtZGF0ZS1tcyIgPSAiMTQ1MTQ3MTMwMjIzNSI7CgkidW5pcXVlLXZlbmRvci1pZGVudGlmaWVyIiA9ICIxMTQ1M0ZGOS0yMUJCLTQ2QzktOERDOS05NUFBQTlCRkNEQjMiOwoJInByb2R1Y3QtaWQiID0gImNvbS5maWxsZS5zbGlkbmV0XzYwdCI7CgkiaXRlbS1pZCIgPSAiMTA3MTA0NzIzOCI7CgkiYmlkIiA9ICJjb20uZmlsbGUuc2xpZG5ldCI7CgkicHVyY2hhc2UtZGF0ZS1tcyIgPSAiMTQ1MTQ3MTMwMjIzNSI7CgkicHVyY2hhc2UtZGF0ZSIgPSAiMjAxNS0xMi0zMCAxMDoyODoyMiBFdGMvR01UIjsKCSJwdXJjaGFzZS1kYXRlLXBzdCIgPSAiMjAxNS0xMi0zMCAwMjoyODoyMiBBbWVyaWNhL0xvc19BbmdlbGVzIjsKCSJvcmlnaW5hbC1wdXJjaGFzZS1kYXRlIiA9ICIyMDE1LTEyLTMwIDEwOjI4OjIyIEV0Yy9HTVQiOwp9";	"environment" = "Sandbox";	"pod" = "100";	"signing-status" = "0";}';
         if(!$order_no){
             $this->apiError(0,"未知的订单号");
         }
         if(!$iap_sign){
             $this->apiError(0,"未知的苹果凭证");
         }
-        if($this->check_iap_sign($iap_sign)){
-            $this->apiError(0,"非法请求");
+        $iap_sign=urldecode($iap_sign);
+        preg_match_all('/".*?"/',$iap_sign,$newarr);
+        if(!$newarr){
+            $this->apiError(0,"非法的苹果凭证");
         }
+        $new_sign="{";
+        foreach($newarr[0] as $key=>$v){
+            if($key%2==0){
+                $new_sign.=$v."=";
+            }else{
+                $new_sign.=$v.";";
+            }
+        }
+        $new_sign.="}";
+        $iap_sign=str_replace(" ","+",$new_sign);
+
         $map['uid']=$this->uid;
         $map['order_no']=$order_no;
         $info=M('user_order_money')->where($map)->find();
@@ -613,6 +627,9 @@ class PayController extends BaseController{
         if($res['buy']==0){
             $this->apiError(0,$res['message']);
         }elseif($res['buy']==1){
+            if($res['product_id']){
+
+            }
             $arr['status']=2;
             $arr['pay_type']=3;
             M('user_order_money')->where($map)->save($arr);
@@ -620,12 +637,12 @@ class PayController extends BaseController{
             $this->addCoin($coin,$info['uid'],$info['id'],$info['uid'],'coin');
             $this->push2user($info['uid'],'您购买了'.$coin.'信用豆，请注意查收');
             //——请根据您的业务逻辑来编写程序（以上代码仅作参考）——
-            $email=C('SYS_EMAIL');
-            if($email){
-                $user=$this->getUserInfo2($info['uid']);
-                $msg="会员：".$user['nickname']."于".date("Y-m-d H:i:s",time())."购买了{$coin}信用豆";
-                $this->send_mail($email,$msg);
-            }
+//            $email=C('SYS_EMAIL');
+//            if($email){
+//                $user=$this->getUserInfo2($info['uid']);
+//                $msg="会员：".$user['nickname']."于".date("Y-m-d H:i:s",time())."购买了{$coin}信用豆";
+//                $this->send_mail($email,$msg);
+//            }
         }
         $this->apiSuccess('success');
     }

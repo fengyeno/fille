@@ -7,9 +7,9 @@ class iap_pay{
     */
     public function check($receipt_data){
         //验证参数
-        if (strlen($receipt_data)<20){
-            return array('buy'=>'0','message'=>'非法参数');
-        }
+//        if (strlen($receipt_data)<20){
+//            return array('buy'=>'0','message'=>'非法参数');
+//        }
 
         //请求验证
         $data['sandbox'] = 0;
@@ -23,7 +23,7 @@ class iap_pay{
             $data['sandbox'] = 1;
         }
         if($data['status']==0){
-            $result = array('buy'=>'1','message'=>'购买成功','sandbox'=>$data['sandbox']);
+            $result = array('buy'=>'1','message'=>'购买成功','sandbox'=>$data['sandbox'],'product_id'=>$data['receipt']['product_id']);
         }else{
             $result = array('buy'=>'0','message'=>'购买失败','status'=>$data['status']);
         }
@@ -43,7 +43,6 @@ class iap_pay{
      * @return string $result
      */
     private function acurl($receipt_data, $sandbox=0){
-
         //小票信息
         $POSTFIELDS = array("receipt-data" => base64_encode($receipt_data));
         $POSTFIELDS = json_encode($POSTFIELDS);
@@ -54,6 +53,14 @@ class iap_pay{
 
         //简单的curl
         $ch = curl_init($url);
+//        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 1); //post到https
+//        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+//        curl_setopt($ch, CURLOPT_POST, true);
+//        curl_setopt($ch, CURLOPT_POSTFIELDS, $POSTFIELDS);
+//        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+//        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);//跟随页面的跳转
+//        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $POSTFIELDS);
@@ -61,6 +68,7 @@ class iap_pay{
         curl_setopt ($ch, CURLOPT_SSL_VERIFYHOST, 0);
         $result = curl_exec($ch);
         curl_close($ch);
+//        print_r($result);die;
         return $result;
     }
 }
