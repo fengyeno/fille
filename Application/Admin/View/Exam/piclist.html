@@ -6,6 +6,11 @@
     <div class="main-title">
         <h2>审核通过图片列表</h2>
     </div>
+    <div class="cf">
+        <div class="fl">
+            <button class="btn ajax-post" url="{:U('del_pics')}" target-form="ids">删 除</button>
+        </div>
+    </div>
     <!-- 数据列表 -->
     <div class="data-table table-striped">
         <table class="">
@@ -24,7 +29,7 @@
             <notempty name="_list">
                 <volist name="_list" id="vo">
                     <tr>
-                        <td><input class="ids" type="checkbox" name="id[]" value="{$vo.uid}" /></td>
+                        <td><input class="ids" type="checkbox" name="id[]" value="{$vo.id}" /></td>
                         <td>
                             <div class="popup-gallery">
                                 <a href="{$vo.pic}" title="查看大图">
