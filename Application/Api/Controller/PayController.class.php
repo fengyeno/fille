@@ -329,11 +329,35 @@ class PayController extends BaseController{
         if(!$uid){
             $this->apiError(0,'未知的用户');
         }
+        $other=$this->getUserInfo($uid);
+        if(!$other){
+            $this->apiError(0,'用户不存在');
+        }
+        $me=$this->getUserInfo($this->uid);
+        if(!$me['vip']){
+            /*我不是vip*/
+            $this->apiError(0,'非vip不能聊天');
+        }
+        $my_level=$this->getVipLevel($me['vip']);
+        if($my_level>=2){
+            $this->apiSuccess('ok');
+        }
+        if(!$other['vip']){
+            /*对方不是vip*/
+            $this->apiError(0,'对方不是vip,非vip不能聊天');
+        }
         if($this->checkPay('im',$uid)){
             $this->apiSuccess('已付款');
         }
         $coin=C('PAY_IM');
-
+        $scale=C('PAY_IM_SCALE');
+        $toCoin=0;
+        if($scale>0 && $scale<=100){
+            $toCoin=$coin*$scale/100;
+        }
+        if($me['coin']<$coin){
+            $this->apiError(0,'信用豆不够了,请充值');
+        }
         $order['uid']=$this->uid;
         $order['type']="im";
         $order['coin']=$coin;
@@ -344,9 +368,11 @@ class PayController extends BaseController{
         /*订单*/
         $res=M('user_order_coin')->add($order);
         /*减去金币*/
-        $this->deCoin($coin,$res,$this->uid,'im');
-
-        $this->apiSuccess('success');
+        $this->deCoin($coin,$res,$uid,'im');
+        if($toCoin){
+            $this->addCoin($toCoin,$uid,$res,$this->uid,'im');
+        }
+        $this->apiSuccess('付款成功');
     }
     /*获取vip价格*/
     protected function get_buyInfo($vip){
