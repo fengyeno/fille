@@ -7,7 +7,8 @@ use User\Api\UserApi;
 class UserController extends BaseController{
 
     public function getRonglian(){
-        if($this->checkBigLevel($this->uid)){
+        $me=$this->getUserInfo($this->uid);
+        if(!$me['vip']){
             /*注册容联*/
             $info=M('ucenter_member')->find($this->uid);
             if(!$info['subaccountsid']){
@@ -29,7 +30,7 @@ class UserController extends BaseController{
             }
             $this->apiSuccess("success",$arr);
         }else{
-            $this->apiError(0,'不是最高等级');
+            $this->apiError(0,'非vip不能聊天');
         }
     }
     /*用户信息*/
