@@ -502,11 +502,32 @@ class UserController extends BaseController{
             $info['vipInfo']=$this->getVipInfo($info['vip']);
         }
         $info['is_big']=$this->checkBigLevel($uid);
+
+        if(!$self['vip']){
+            /*我不是vip*/
+            $info['im_free']=false;
+        }else{
+            $my_level=$this->getVipLevel($self['vip']);
+            if($my_level>=2){
+                $info['im_free']=true;
+            }else{
+                $info['im_free']=false;
+                if($this->checkPay('im',$uid)){
+                    $info['im_free']=true;
+                }
+            }
+        }
+//        if(!$info['vip']){
+//            /*对方不是vip*/
+//            $info['im_free']=false;
+//        }
+
         $info['no']=$this->id2no($uid);
         $info['is_follow']=$this->checkFollow($uid);
         $data['info']=$info;
         $this->apiSuccess('success',$data);
     }
+
     /*voipAccount,subAccountSid查询用户*/
     public function vgetUser(){
         $voipAccount=I('voipAccount');
