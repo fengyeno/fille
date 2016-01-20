@@ -510,16 +510,16 @@ class UserController extends BaseController{
             $my_level=$this->getVipLevel($self['vip']);
             if($my_level>=2){
                 $info['im_free']=true;
+                if(!$info['vip']){
+                    /*对方不是vip*/
+                    $info['im_free']=false;
+                }
             }else{
                 $info['im_free']=false;
                 if($this->checkPay('im',$uid)){
                     $info['im_free']=true;
                 }
             }
-        }
-        if(!$info['vip']){
-            /*对方不是vip*/
-            $info['im_free']=false;
         }
 
         $info['no']=$this->id2no($uid);
