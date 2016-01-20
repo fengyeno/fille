@@ -517,10 +517,10 @@ class UserController extends BaseController{
                 }
             }
         }
-//        if(!$info['vip']){
-//            /*对方不是vip*/
-//            $info['im_free']=false;
-//        }
+        if(!$info['vip']){
+            /*对方不是vip*/
+            $info['im_free']=false;
+        }
 
         $info['no']=$this->id2no($uid);
         $info['is_follow']=$this->checkFollow($uid);
