@@ -8,7 +8,7 @@ class UserController extends BaseController{
 
     public function getRonglian(){
         $me=$this->getUserInfo($this->uid);
-        if(!$me['vip']){
+        if($me['vip']){
             /*注册容联*/
             $info=M('ucenter_member')->find($this->uid);
             if(!$info['subaccountsid']){
